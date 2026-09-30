@@ -1,26 +1,42 @@
+import os
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import (
     Application,
     CommandHandler,
-    ContextTypes
+    ContextTypes,
+    MessageHandler,
+    filters
+)
+from database.db import init_db
+from handlers.commands import (
+    guardaruser,
+    tuinfo,
+    escribirAtodos,
+    start,
+    ayuda,
+    mostrarusuarios
 )
 
-import os
-
 load_dotenv()
-
+init_db()
 TOKEN = os.getenv("TOKEN")
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
-    await update.message.reply_text(
-        "Helloworld."
-    )
-
+        
 app = Application.builder().token(TOKEN).build()
 
+app.add_handler(CommandHandler("guardaruser", guardaruser))
+app.add_handler(CommandHandler("tuinfo", tuinfo))
+app.add_handler(CommandHandler("escribirAtodos", escribirAtodos))
 app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("ayuda", ayuda))
+app.add_handler(CommandHandler("mostrarusuarios", mostrarusuarios))
+    # app.add_handler(
+    #     MessageHandler(
+    #         filters.TEXT & ~filters.COMMAND,
+    #         reply
+    #     )
+    # )
 
 print("Bot iniciado...")
 
