@@ -1,13 +1,6 @@
-import os
-from dotenv import load_dotenv
 from telegram import Update
-from telegram.ext import (
-    Application,
-    CommandHandler,
-    ContextTypes,
-    MessageHandler,
-    filters
-)
+from telegram.error import TelegramError
+from telegram.ext import ContextTypes
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(
@@ -61,6 +54,6 @@ async def escribirAtodos(update: Update, context: ContextTypes.DEFAULT_TYPE):
     mensaje = "".join(context.args)
     for user_id in usuarios:
         try:
-            await context.bot.send_message(chat_id=user_id, text='example')
-        except Exception as e:
+            await context.bot.send_message(chat_id=user_id, text=mensaje)
+        except TelegramError as e:
             print(f"Error al enviar mensaje a {user_id}: {e}")
