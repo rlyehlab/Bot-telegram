@@ -10,9 +10,9 @@ def get_connection():
 def init_db():
     conn = get_connection()
     conn.execute("""
-                 CREATE TABLE IF NOT EXIST usuarios (
+                 CREATE TABLE IF NOT EXISTS usuarios (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        telegram_id INTEGER UINIQUE NOT NULL,
+                        telegram_id INTEGER UNIQUE NOT NULL,
                         first_name TEXT,
                         username TEXT,
                         created_at TEXT DEFAULT CURRENT_TIMESTAMP
