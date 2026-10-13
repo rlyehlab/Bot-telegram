@@ -12,6 +12,7 @@ from handlers.commands import (
     escribirAtodos,
     guardaruser,
     mostrarusuarios,
+    recordatorio,
     start,
     tuinfo,
 )
@@ -29,6 +30,7 @@ app.add_handler(CommandHandler("escribirAtodos", escribirAtodos))
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("ayuda", ayuda))
 app.add_handler(CommandHandler("mostrarusuarios", mostrarusuarios))
+app.add_handler(CommandHandler("recordatorio", recordatorio))
     # app.add_handler(
     #     MessageHandler(
     #         filters.TEXT & ~filters.COMMAND,

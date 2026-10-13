@@ -21,5 +21,33 @@ def init_db():
     conn.commit()
     conn.close()
     
-
-                 
+def guardar_usuario(telegram_id, first_name, username):
+    conn = get_connection()
+    try:
+        conn.execute(
+            """
+            INSERT INTO usuarios (telegram_id, first_name, username)
+            VALUES (?, ?, ?)
+            ON CONFLICT(telegram_id) DO UPDATE SET
+                first_name = excluded.first_name,
+                username = excluded.username
+            """,
+            (telegram_id, first_name, username),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+def obtener_todos_usuarios():
+    conn = get_connection()
+    try:
+        filas = conn.execute(
+            """
+            SELECT telegram_id, first_name, username, created_at
+            FROM usuarios
+            """
+        ).fetchall()
+        # for fila in filas:
+            # print(f"id:{fila['telegram_id']}, first_name: {fila['first_name']}, username: {fila['username']}, created_at: {fila['created_at']}")
+        return [dict(fila) for fila in filas]
+    finally:
+        conn.close()                 
